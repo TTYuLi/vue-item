@@ -17,7 +17,8 @@
 export default {
   data(){
     return {
-      newsInfo: {}//新闻详情
+      newsInfo: {},//新闻详情
+
     }
   },
   created(){

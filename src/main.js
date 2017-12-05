@@ -40,6 +40,8 @@ import Shopcart from './components/Shopcart/Shopcart.vue'
 import Member from './components/Member/Member.vue'
 import NewsList from './components/News/NewsList.vue'
 import NewsDetail from './components/News/NewsDetail.vue'
+import PicShare from './components/Share/PicShare.vue'
+import PicDetail from './components/Share/PicDetail.vue'
 
 // 配合路由和规则
 const router = new VueRouter()
@@ -53,7 +55,9 @@ router.addRoutes([
   {name:'shopcart',path:'/shopcart',component:Shopcart},
   {name:'member',path:'/member',component:Member},
   {name:'news.list',path:'/news/list',component:NewsList},
-  {name: 'news.datail', path: '/detail', component: NewsDetail}
+  {name: 'news.datail', path: '/detail', component: NewsDetail},
+  {name:'share',path:'/share',component:PicShare},
+  {name:'pic.detil',path:'/picDetail',component:PicDetail}
 ])
 
 

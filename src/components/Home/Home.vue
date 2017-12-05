@@ -41,7 +41,7 @@ export default {
       {
         title:'图文分享',
         className:'pic',
-        router:{name:'news.list'}
+        router:{name:'share',params:{catId:0}}
       },
       {
         title:'商品列表',
