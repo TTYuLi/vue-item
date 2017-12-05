@@ -13,10 +13,10 @@
 
       <!-- 九宫格 -->
     <my-ul>
-      <my-li v-for="(router, index) in HRouters" :key="index">
-        <a href="javascript:;">
-          <div :class="'bgimg '+ router.className">{{router.title}}</div>
-        </a>
+      <my-li v-for="(item, index) in HRouters" :key="index">
+        <router-link :to="item.router">
+          <div :class="'bgimg '+ item.className">{{item.title}}</div>
+        </router-link>
       </my-li>
     </my-ul>
     </div>
@@ -35,27 +35,33 @@ export default {
       pics:[],
       HRouters:[{
         title:'新闻列表',
-        className:'news'
+        className:'news',
+        router:{name:'news.list'}
       },
       {
         title:'图文分享',
-        className:'pic'
+        className:'pic',
+        router:{name:'news.list'}
       },
       {
         title:'商品列表',
-        className:'goods'
+        className:'goods',
+        router:{name:'news.list'}
       },
       {
         title:'留言反馈',
-        className:'feedback'
+        className:'feedback',
+        router:{name:'news.list'}
       },
       {
         title:'搜索资讯',
-        className:'search'
+        className:'search',
+        router:{name:'news.list'}
       },
       {
         title:'联系我们',
-        className:'callme'
+        className:'callme',
+        router:{name:'news.list'}
       }]
     }
   },
