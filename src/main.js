@@ -56,8 +56,8 @@ router.addRoutes([
   {name:'member',path:'/member',component:Member},
   {name:'news.list',path:'/news/list',component:NewsList},
   {name: 'news.datail', path: '/detail', component: NewsDetail},
-  {name:'share',path:'/share',component:PicShare},
-  {name:'pic.detil',path:'/picDetail',component:PicDetail}
+  {name:'share',path:'/share/list/:catId',component:PicShare},
+  {name:'pic.detil',path:'/share/picDetail/:picId',component:PicDetail}
 ])
 
 

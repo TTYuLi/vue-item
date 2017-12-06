@@ -8,17 +8,18 @@
 <script>
 export default {
   name:'nav-bar',
+  props:['title'],
   methods:{
     goback(){
       this.$router.go(-1)
-    },
-    props:['title'],
+    }
+  },
     data(){
       return {
 
       }
     }
-  }
+  
 }
 </script>
 

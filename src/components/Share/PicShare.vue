@@ -14,7 +14,7 @@
         <div class="photo-list">
             <ul>
                 <li v-for="pic in pics" :key="pic.id">
-                    <router-link :to="{name:'pic.detil',params:{picId:pic.id}}">
+                    <router-link :to="{name:'pic.detil',params:{picId:pic.id} }">
                         <img v-lazy="pic.img_url">
                         <p>
                             <span>{{pic.title}}}</span>

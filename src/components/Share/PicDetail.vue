@@ -22,19 +22,20 @@
      data(){
        return {
          imgs: [],
-         imgDetail: []
+         imgDetail: []  
        }
      },
      created(){
-       let picId = this.$route.params
-        this.$axios.get('getthumimages' + picId)
+         console.log(this.$route.params)
+       let picId = this.$route.params.picId
+        this.$axios.get('getthumimages/' + picId)
         .then(res =>{
           this.imgs = res.data.message
         }).catch(err=>{
           console.log(err)
         })
 
-        this.$axios.get('getimageInfo' + picId)
+        this.$axios.get('getimageInfo/' + picId)
         .then(res => {
          this.imgDetail = res.data.message
           this.imds.forEach(ele=>{
