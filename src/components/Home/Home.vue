@@ -46,12 +46,12 @@ export default {
       {
         title:'商品列表',
         className:'goods',
-        router:{name:'news.list'}
+        router:{name:'goods.list',params:{page:1}}
       },
       {
         title:'留言反馈',
         className:'feedback',
-        router:{name:'news.list'}
+        router:{name:'goods.list',params:{page:1}}
       },
       {
         title:'搜索资讯',

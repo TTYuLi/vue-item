@@ -7,14 +7,15 @@
             <span>{{imgDetail.click}}次浏览</span>
             <span>分类：民生经济</span>
         </div>
-        <ul>
-            <li v-for="(item, index) in imgs" :key="index">
-                <img class="preview-img" :src="item.src" alt="" @click="$preview.open(index,imgs)">
-            </li>    
-        </ul>
+        <my-ul>
+            <my-li v-for="(item, index) in imgs" :key="index">
+                <img class="preview-img" :src="item.src" alt="" @click="$preview.open(index,imgs)" />
+            </my-li>    
+        </my-ul>
         <div class="photo-desc">
-            <p  v-html="imgDetail.content"></p>
+            <p v-html="imgDetail.content"></p>
         </div>
+        <comment :cId="$route.params.picId"></comment>
     </div>
 </template>
 <script>
@@ -22,11 +23,11 @@
      data(){
        return {
          imgs: [],
-         imgDetail: []  
+         imgDetail: {}  
        }
      },
      created(){
-         console.log(this.$route.params)
+         //console.log(this.$route.params)
        let picId = this.$route.params.picId
         this.$axios.get('getthumimages/' + picId)
         .then(res =>{
@@ -37,8 +38,9 @@
 
         this.$axios.get('getimageInfo/' + picId)
         .then(res => {
-         this.imgDetail = res.data.message
-          this.imds.forEach(ele=>{
+         this.imgDetail = res.data.message[0]
+         //console.log(this.imgDetail)
+          this.imgs.forEach(ele=>{
             ele.h = 400
             ele.w = 600
           })

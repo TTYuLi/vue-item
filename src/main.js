@@ -2,8 +2,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-//注册全局过滤器
+
 import Moment from 'moment'
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
+//注册全局过滤器
+
 // 转换时间格式
 Vue.filter('convertTime',(value)=>{
   return Moment(value).format('YYYY-MM-DD')
@@ -27,10 +31,12 @@ Vue.use(VueRouter)
 import MyLi from './components/common/MyLi.vue'
 import MyUl from './components/common/MyUl.vue'
 import NavBar from './components/common/NavBar.vue'
+import Comment from './components/common/comment.vue'
+
 Vue.component(MyLi.name,MyLi)
 Vue.component(MyUl.name,MyUl)
 Vue.component(NavBar.name, NavBar)
-
+Vue.component(Comment.name,Comment)
 
 //引入各种路由组件
 import App from './components/App.vue'
@@ -42,6 +48,7 @@ import NewsList from './components/News/NewsList.vue'
 import NewsDetail from './components/News/NewsDetail.vue'
 import PicShare from './components/Share/PicShare.vue'
 import PicDetail from './components/Share/PicDetail.vue'
+import GoodsList from './components/Goods/GoodsList.vue'
 
 // 配合路由和规则
 const router = new VueRouter()
@@ -58,6 +65,7 @@ router.addRoutes([
   {name: 'news.datail', path: '/detail', component: NewsDetail},
   {name:'share',path:'/share/list/:catId',component:PicShare},
   {name:'pic.detil',path:'/share/picDetail/:picId',component:PicDetail}
+  ,{name:'goods.list',path:'/goods/list',component:GoodsList}
 ])
 
 
