@@ -32,11 +32,13 @@ import MyLi from './components/common/MyLi.vue'
 import MyUl from './components/common/MyUl.vue'
 import NavBar from './components/common/NavBar.vue'
 import Comment from './components/common/comment.vue'
+import LunBo from './components/common/lunBo.vue'
 
 Vue.component(MyLi.name,MyLi)
 Vue.component(MyUl.name,MyUl)
 Vue.component(NavBar.name, NavBar)
 Vue.component(Comment.name,Comment)
+Vue.component(LunBo.name,LunBo)
 
 //引入各种路由组件
 import App from './components/App.vue'
@@ -49,6 +51,7 @@ import NewsDetail from './components/News/NewsDetail.vue'
 import PicShare from './components/Share/PicShare.vue'
 import PicDetail from './components/Share/PicDetail.vue'
 import GoodsList from './components/Goods/GoodsList.vue'
+import GoodsDetail from './components/Goods/GoodsDetail.vue'
 
 // 配合路由和规则
 const router = new VueRouter()
@@ -65,7 +68,8 @@ router.addRoutes([
   {name: 'news.datail', path: '/detail', component: NewsDetail},
   {name:'share',path:'/share/list/:catId',component:PicShare},
   {name:'pic.detil',path:'/share/picDetail/:picId',component:PicDetail}
-  ,{name:'goods.list',path:'/goods/list',component:GoodsList}
+  , { name: 'goods.list', path:'/goods/list/:page',component:GoodsList},
+  {name:'goods.detail',path:'/goods/detail/:goodId',component:GoodsDetail}
 ])
 
 

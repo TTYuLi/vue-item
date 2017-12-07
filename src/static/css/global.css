@@ -17,3 +17,10 @@ a{
     position: fixed;
     bottom:0;
    } 
+.goodDesc {
+    display: none
+}
+
+.gomeImgLoad {
+    width:100%;
+}

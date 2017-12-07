@@ -66,7 +66,7 @@ export default {
           this.cats.unshift({ id: 0, title: "全部" });
 
           this.pics = imgRes.data.message;
-          if (!this.pics.length) {
+          if (this.pics.length == 0) {
             this.$toast({
               massage: "没有图片了哦",
               duration: 3000

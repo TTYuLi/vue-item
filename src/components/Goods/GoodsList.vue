@@ -1,10 +1,12 @@
 <template>
-    <div>
-        <ul>
+    <div  :style="'height:'+ height">
+      <nav-bar title="商品列表"></nav-bar>
+      <mt-loadmore ref="loadmore" :bottom-method="loadBottom" :auto-fill="isAutoFill" :bottom-all-loaded="allLoaded">
+        <ul ref="ul">
             <li v-for="good in goods" :key="good.id">
-                <a>
+                <router-link :to="{name:'goods.detail',params:{goodId:good.id}}">
                     <img :src="good.img_url">
-                    <div class="title">{{good.title|convertTitle(26)}}</div>
+                    <div class="title">{{good.title|convertTitle(25)}}</div>
                     <div class="desc">
                         <div class="sell">
                             <span>￥{{good.sell_price}}</span>
@@ -19,27 +21,75 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </router-link>
             </li>             
           
         </ul>
+        </mt-loadmore>
     </div>
 </template>
 <script>
 export default {
+  //接收APP中的头和底部
+  props:['appRefs'],
   data(){
     return {
-      goods:[]
+      goods:[],
+      allLoaded:false,
+      isAutoFill:false,
+      page:1,
+      height:''//根节点div的高度
+    }
+  },
+  methods:{
+    loadBottom(){
+      this.$axios.get(`getgoods?pageindex=${this.page}`)
+      .then( res => {
+        
+        if (res.data.message.length == 0) {
+          this.$toast({
+            message:'没有数据了哦!',
+            duration:2000
+          })
+          //没有数据时，设置禁止下拉
+          this.allLoaded = true
+          return
+        }
+        //如果有数据，则追加数据
+        this.goods = this.goods.concat(res.data.message)
+        this.page++
+        // 把loading状态通知货到初始状态
+        this.$refs.loadmore.onBottomLoaded()
+
+      })
+      .catch( err => {
+        console.log(err)
+      })
+
+    },
+    //动态获取父盒子高度
+    getHeight(){
+
+        return this.height = document.documentElement.clientHeight -
+        this.appRefs.header.$el.offsetHeight -
+        this.appRefs.footer.$el.offsetHeight
     }
   },
   created(){
+    console.log()
     let page = this.$route.params.page
     this.$axios.get(`getgoods?pageindex=${page}`)
     .then(res => {
       this.goods = res.data.message
-      console.log(res.data)
-      console.log(res)
+      //console.log(res.data)
+     // console.log(res)
     })
+    .catch(err => {
+        console.log(err)
+    })
+  },
+  mounted () {
+      this.getHeight()
   }
 }
 </script>

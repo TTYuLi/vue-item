@@ -1,15 +1,7 @@
 <template>
     <div>
       <!-- 轮播图 -->
-      <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="(pic,index) in pics" :key="index">
-          <a :href="pic.url">
-            <img :src="pic.img" alt="">
-          </a>
-      </mt-swipe-item>
-  
-      </mt-swipe>
-
+       <lunbo url="getlunbo"></lunbo>
 
       <!-- 九宫格 -->
     <my-ul>
@@ -24,15 +16,10 @@
 
 <script>
 export default {
-  created(){
-    this.$axios.get("getlunbo").then( res => {
-      console.log(res)
-      this.pics = res.data.message
-    })
-  },
+ 
   data(){
     return {
-      pics:[],
+     
       HRouters:[{
         title:'新闻列表',
         className:'news',
@@ -72,13 +59,7 @@ export default {
 </script>
 
 <style scoped>
-/*轮播图样式*/
-.mint-swipe-item img {
-    width: 100%;
- }
-.mint-swipe{
-    height: 30%;
-}
+
 /*九宫格样式*/
 .bgimg{
         background-size: 50px;

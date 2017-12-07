@@ -9,8 +9,8 @@
         <ul>
           <li v-for="news in newsList" :key="news.id">
             <router-link :to="{name:'news.datail',query:{newsId:news.id}}">
-              <img :src="news.img_url" alt="">
-              <div>
+              <img :src="news.img_url" alt="" class="news-content" width="42" height="42px">
+              <div class="news_info">
                 <span>{{news.title|convertTitle(13)}}</span>
                 <div class="news-desc">
                   <p>点击数:{{news.click}}</p>
@@ -45,23 +45,25 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+ 
 .demo a {
     display: block;
-    width: 100%;
+    width: 330px;
     height: 44px;
     color: #000;
-    padding: 10px 0px 10px 10px;
+    padding: 10px 15px;
 }
 .demo img {
-    float: left;
+    float: left;  
     width: 42px;
     height: 42px;
     margin-right: 20px;
 }
-.demo a div {
+.news_info {
     float: left;
-    width: 258px;
+    width: 238px;
+    margin-right: 20px;
 }
 .demo span {
     display: block;
