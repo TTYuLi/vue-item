@@ -4,7 +4,7 @@
       <mt-header title="爱购就 go" ref="header"></mt-header>
       <router-view :appRefs="$refs"></router-view>
 
-
+   
       <!-- 底部 -->
       <mt-tabbar v-model="selected" ref="footer">
       <mt-tab-item id="home">
@@ -17,7 +17,7 @@
       </mt-tab-item>
       <mt-tab-item id="shopcart">
       <img slot="icon" src="../static/img/shopcart.png">
-      购物车
+      购物车<mt-badge type="error" size="small">{{num}}</mt-badge>
       </mt-tab-item>
       <mt-tab-item id="search">
       <img slot="icon" src="../static/img/find.png">
@@ -28,10 +28,19 @@
 </template>
 
 <script>
+import GoodsTools from './common/GoodsTools.js'
+import VueBus from './common/VueBus.js'
 export default {
+  created(){
+    //加减小球数量
+    VueBus.$on('addshopcart',pickNum =>this.num += pickNum)
+    //更改小球数量
+    VueBus.$on('changeTotalCount',num => this.num = num)
+  },
   data(){
     return {
-      selected:''
+      selected:'',
+      num:GoodsTools.getTotalCount()
     }
   },
   watch:{
@@ -41,7 +50,8 @@ export default {
       this.$router.push({
         name:newV
       })
-    }
+    },
+
   }
 };
 </script>

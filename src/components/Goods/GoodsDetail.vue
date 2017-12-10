@@ -13,15 +13,17 @@
                 </span></li>
                 <li class="price-li">市场价：
                     <s>￥{{goodInfo.market_price}}</s> 销售价：<span>￥{{goodInfo.sell_price}}</span></li>
-                <li class="number-li">购买数量：<span>-</span><span>1</span><span>+</span></li>
+                <li class="number-li">购买数量：<span @click="subtract">-</span><span>{{pickNum}}</span><span @click="plus">+</span></li>
                 <li>
                     <mt-button type="primary">立即购买</mt-button>
-                    <mt-button type="danger">加入购物车</mt-button>
+                    <mt-button type="danger" @click="addCart">加入购物车</mt-button>
                 </li>
             </ul>
         </div>
-       
-            <div class="ball"></div>
+       <!-- 小球的运动效果 -->
+       <transition name="myball" v-on:after-enter="afterEnter">
+            <div class="ball" v-if="showBall"></div>
+        </transition>
         <div class="product-props">
             <ul>
                 <li>商品参数</li>
@@ -33,30 +35,71 @@
         <div class="product-info">
             <ul>
                 <li>
-                    <mt-button type="primary" size="large" plain >图文详情</mt-button>
-                    <div v-html="goodDesc.content" class="goodDesc"></div>
+                    <mt-button type="primary" size="large" plain @click="getGoodsDesc">图文详情</mt-button>
                 </li>
                 <li>
-                    <mt-button type="danger" size="large" plain>商品评论</mt-button>
+                    <mt-button type="danger" size="large" plain @click="getGoodsComment">商品评论</mt-button>
                 </li>
             </ul>
         </div>
     </div>
 </template>
 <script>
+import GoodsTools from '../common/GoodsTools.js'
+import VueBus from '../common/VueBus.js'
 export default {
   data(){
     return {
         goodInfo:{},
         goodDesc:``,  
-        goodUrl:''
-             
+        goodUrl:'',
+        showBall:false,//小球是否存在
+        pickNum:'0'    
     }
+  },
+  methods:{
+      //跳转到商品详情页面
+      getGoodsDesc(){
+         this.$router.push({
+             name:'goods.photo.detail',
+             query:{goodsId:this.goodInfo.id}
+         }) 
+        
+      },
+      //跳转到商品评论
+      getGoodsComment(){
+          this.$router.push({
+              name:'goods.detail.comment',
+              query:{commentId:this.goodInfo.id}
+          })
+           console.log(this.goodInfo.id)
+      },//减少
+      subtract(){
+          this.pickNum  = this.pickNum -0 -1
+      },//增加
+      plus(){
+          this.pickNum  = this.pickNum -0 + 1
+      },
+      //加入购物车
+      addCart(){
+          this.showBall =true//触发v-enter-active的动画
+          //更改本地存储
+
+          GoodsTools.addOrUpdate({
+              id:this.goodInfo.id,
+              num:this.pickNum
+          })
+            
+      },
+      afterEnter(){
+          //过渡元素进入后，动画完毕，将小球移出
+          this.showBall = false;
+      }
   },
   created(){
     let goodId = this.$route.params.goodId
     this.goodUrl= `getthumimages/${goodId}`
-    // 商品详情
+    // 获取商品详情
     this.$axios.get(`goods/getinfo/${goodId}`)
     .then( res => {
       this.goodInfo = res.data.message[0]
@@ -65,40 +108,33 @@ export default {
     .catch( err => {
         console.log(err)
     })
-    //获取图文详情信息
-    this.$axios.get(`goods/getdesc/${goodId}`)
-    .then( res => {
-        this.goodDesc = res.data.message[0] 
-        console.log(this.goodDesc)
-    })
-    .catch( err => {
-        console.log(err)
-    })
-    //轮播图
-    this.$axios.get(`getthumimages/${goodId}`)
-    .then( res => {
-
-    })
+    
+    
   }
 }
 </script>
 <style scoped>
-.ball-enter-active {
+
+/* 进入中的动画 */
+.myball-enter-active {
     animation: bounce-in 1s;
 }
-
+/* 设置离开后状态为透明 */
+.myball-leave{
+    opacity: 0;
+}
 @keyframes bounce-in {
     0% {
         transform: translate3d(0, 0, 0);
     }
     50% {
-        transform: translate3d(140px, -50px, 0);
+        transform: translate3d(120px, -50px, 0);
     }
     75% {
-        transform: translate3d(160px, 0px, 0);
+        transform: translate3d(140px, 0px, 0);
     }
     100% {
-        transform: translate3d(140px, 300px, 0);
+        transform: translate3d(120px, 300px, 0);
     }
 }
 
